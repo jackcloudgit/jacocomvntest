@@ -35,7 +35,7 @@ jobs:
         id: jacoco
         uses: madrapps/jacoco-report@v1.1
         with:
-          path: target/surefire-reports/TEST-com.octopus.RandomQuotesControllerTest.xml
+          path: target/site/jacoco/index.html
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 40
           min-coverage-changed-files: 60

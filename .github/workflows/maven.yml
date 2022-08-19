@@ -22,15 +22,6 @@ jobs:
       - name: Test
         run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
 
-      - name: Report
-        uses: dorny/test-reporter@v1
-        if: always()
-        with:
-          name: Maven Tests
-          path: target/surefire-reports/*.xml
-          reporter: java-junit
-          fail-on-error: true
-      
       - name: Jacoco Report to PR
         id: jacoco
         uses: madrapps/jacoco-report@v1.1
@@ -40,7 +31,16 @@ jobs:
           min-coverage-overall: 40
           min-coverage-changed-files: 60
           debug-mode: false
-
+      
+      - name: Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Maven Tests
+          path: 'target/surefire-reports/*.xml, target/site/jacoco/index.html'
+          reporter: java-junit
+          fail-on-error: true
+      
       - name: Get the Coverage info
         run: |
           echo "Total coverage ${{ steps.jacoco.outputs.coverage-overall }}"
